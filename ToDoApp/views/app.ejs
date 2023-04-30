@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title> <%= title %></title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script
+            src="https://kit.fontawesome.com/136b87b371.js"
+            crossorigin="anonymous">
+        </script>
+        <link rel="stylesheet" type="text/css" href="/css/app.css" />
+    </head>
+    <body>
+        <div id="app">
+            <!-- Header section -->
+            <div class="app-header">
+                <h1 class="pt-5">TODO App</h1>
+            </div>
+
+            <!-- Input form section for Create/Add task -->
+            <div id="app-input" class="p-5">
+
+                <form class="input-form" action="/create-task" method="post">
+
+                    <div class="container" >
+                        <div class="row">
+                            <div class="col input-group input-group-lg">
+                                <input style="height:80px" type="text" name="description" class="form-control" placeholder="ToDo Task Description" aria-label="Description" aria-describedby="inputGroup-sizing-lg">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="input-group input-group-lg">
+                                    <select class="form-select" id="inputGroupSelect01" name="type">
+                                      <option value="1">Personal</option>
+                                      <option value="2">Work</option>
+                                      <option value="3">School</option>
+                                      <option value="4">Cleaning</option>
+                                      <option value="5">Other</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="col">
+                                <div class="col input-group input-group-lg" >
+                                    <input type="date" name="deadline" class="form-control" placeholder="Due date" aria-label="Deadline" aria-describedby="inputGroup-sizing-lg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col center-items">
+                                <button type="submit" class="btn btn-dark btn-lg buttons" >
+                                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                                    Add Task
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+
+                <!-- Output to show the existing tasks & Delete them -->
+                <% if(task_list.length >0) { %>
+                <form action="/delete-tasks" method="post" class="output-form">
+                    
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <span class="app-header"> Task List </span>
+                                <button style="float: right;" type="submit" class="btn btn-danger btn-lg buttons">
+                                    <span  style="color: white;">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        &nbsp;
+                                        Delete Tasks
+                                    </span>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    <div>
+
+                        <!-- List of existing tasks -->
+                        <% for(let task of task_list) { %>
+                            <div class="card m-3 ">
+                                <div class="card-header">
+                                    <h4>
+                                        <input class="form-check-input" name="task_id" type="checkbox" value=<%= task._id %> id="flexCheckDefault">
+                                        &nbsp;
+                                        <%= task.description %> 
+                                    </h4>
+                                  </div>
+                                  <div class="card-body pt-3">
+                                    <span class="card-text">
+                                        <h6 style="display: inline-block;">
+                                            <i class="fa-solid fa-calendar-days" style="color: #100f0f;"></i>
+                                             &nbsp; 
+                                            <%= new Date(task.deadline).toISOString()  %> 
+                                        </h6>
+                                    </span>
+                                    <span style="float: right;"> 
+                                        <a class="btn btn-dark"><%= task.type %></a>
+                                    </span>
+                                  </div>
+                            </div>
+                        <% } %>
+                            
+                    </div>
+
+                </form>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/js/app.js" ></script>
+    </body>
+</html>
